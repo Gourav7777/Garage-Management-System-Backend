@@ -1,10 +1,10 @@
 const express = require("express")
 const app = express()
 const connection = require("./Config/db")
-
+const garageRoutes =  require("./Routes/garage.routes")
 
 app.use(express.json())
-
+app.use("/api/garage",garageRoutes)
 const PORT = 8000
 
 
