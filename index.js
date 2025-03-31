@@ -2,9 +2,15 @@ const express = require("express")
 const app = express()
 const connection = require("./Config/db")
 const garageRoutes =  require("./Routes/garage.routes")
+const engineerRoutes = require("./Routes/engineer.routes")
+const jobRoutes = require("./Routes/jobCard.routes")
 
 app.use(express.json())
+
 app.use("/api/garage",garageRoutes)
+app.use("/api/engineers", engineerRoutes);
+app.use("/api/jobCards", jobRoutes); 
+
 const PORT = 8000
 
 

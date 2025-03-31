@@ -1,5 +1,5 @@
 const express = require("express");
-const { createGarage,getAllGarages,updateGarage,deleteGarage } = require("../Contorller/garage.controller");
+const { createGarage,getAllGarages,updateGarage,deleteGarage } = require("../Controllers/garage.controller");
 
 
 const router = express.Router();
