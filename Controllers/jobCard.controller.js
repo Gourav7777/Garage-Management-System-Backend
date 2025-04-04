@@ -3,38 +3,94 @@ const Garage = require("../Model/garage.model");
 const Engineer = require("../Model/engineer.model");
 
 // ➤ Create a Job Card (Engineer not assigned initially)
+// const createJobCard = async (req, res) => {
+//   try {
+//     const { garageId, customerNumber, customerName, contactNumber, email, company, carNumber, model, kilometer, fuelType, insuranceProvider, policyNumber, expiryDate, registrationNumber, type, excessAmount, jobDetails, images, video } = req.body;
+
+//     // Check if garage exists
+//     const garage = await Garage.findById(garageId);
+//     if (!garage) {
+//       return res.status(404).json({ message: "Garage not found" });
+//     }
+
+//     const newJobCard = new JobCard({
+//       garageId, 
+//       customerNumber, 
+//       customerName, 
+//       contactNumber, 
+//       email, 
+//       company, 
+//       carNumber, 
+//       model, 
+//       kilometer, 
+//       fuelType, 
+//       insuranceProvider, 
+//       policyNumber, 
+//       expiryDate, 
+//       registrationNumber, 
+//       type, 
+//       excessAmount, 
+//       jobDetails, 
+//       images, 
+//       video,
+//       status: "In Progress",  // Default status
+//       engineerId: null  // Engineer will be assigned later
+//     });
+
+//     await newJobCard.save();
+//     res.status(201).json({ message: "Job Card created successfully", jobCard: newJobCard });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server Error", error: error.message });
+//   }
+// };
+
+
 const createJobCard = async (req, res) => {
   try {
-    const { garageId, customerNumber, customerName, contactNumber, email, company, carNumber, model, kilometer, fuelType, insuranceProvider, policyNumber, expiryDate, registrationNumber, type, excessAmount, jobDetails, images, video } = req.body;
+    const {
+      garageId, customerNumber, customerName, contactNumber, email, company,
+      carNumber, model, kilometer, fuelType, insuranceProvider, policyNumber,
+      expiryDate, registrationNumber, type, excessAmount, jobDetails
+    } = req.body;
 
-    // Check if garage exists
+    const images = req.files?.images?.map(file => file.path) || [];
+    const video = req.files?.video?.[0]?.path || null;
+    
+
+    console.log("files :", req.files)
+
+    if (!req.files.images) {
+      return res.status(400).json({ message: "No images uploaded" });
+    }
+
+    // Validate garage exists
     const garage = await Garage.findById(garageId);
     if (!garage) {
       return res.status(404).json({ message: "Garage not found" });
     }
 
     const newJobCard = new JobCard({
-      garageId, 
-      customerNumber, 
-      customerName, 
-      contactNumber, 
-      email, 
-      company, 
-      carNumber, 
-      model, 
-      kilometer, 
-      fuelType, 
-      insuranceProvider, 
-      policyNumber, 
-      expiryDate, 
-      registrationNumber, 
-      type, 
-      excessAmount, 
-      jobDetails, 
-      images, 
+      garageId,
+      customerNumber,
+      customerName,
+      contactNumber,
+      email,
+      company,
+      carNumber,
+      model,
+      kilometer,
+      fuelType,
+      insuranceProvider,
+      policyNumber,
+      expiryDate,
+      registrationNumber,
+      type,
+      excessAmount,
+      jobDetails,
+      images,
       video,
-      status: "In Progress",  // Default status
-      engineerId: null  // Engineer will be assigned later
+      status: "In Progress",
+      engineerId: null
     });
 
     await newJobCard.save();
@@ -43,6 +99,9 @@ const createJobCard = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
+
+
 
 // ➤ Get All Job Cards (For a Specific Garage)
 const getJobCardsByGarage = async (req, res) => {

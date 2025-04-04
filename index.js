@@ -10,6 +10,7 @@ app.use(express.json())
 app.use("/api/garage",garageRoutes)
 app.use("/api/engineers", engineerRoutes);
 app.use("/api/jobCards", jobRoutes); 
+app.use("/uploads", express.static("uploads"));  // So you can access files via URL
 
 const PORT = 8000
 

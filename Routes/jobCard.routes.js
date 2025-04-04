@@ -8,11 +8,21 @@ const {
   assignEngineer,
   updateJobStatus,
 } = require("../Controllers/jobCard.controller");
+const upload = require("../Middlewares/upload")
 
 const router = express.Router();
 
 // Job Card Routes
-router.post("/add", createJobCard); // Create Job Card
+
+// Create Job Card
+// router.post("/add", createJobCard); 
+
+// with images
+router.post("/add", upload.fields([
+  { name: "images", maxCount: 5 },
+  { name: "video", maxCount: 1 }
+]), createJobCard)
+
 router.get("/garage/:garageId", getJobCardsByGarage); // Get all Job Cards for a Garage
 router.get("/:jobCardId", getJobCardById); // Get Single Job Card
 router.put("/:jobCardId", updateJobCard); // Update Job Card
