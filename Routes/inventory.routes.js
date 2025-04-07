@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const {addPart, getPartsByGarage,updatePart,deletePart} = require("../Controllers/inventory.controller");
+const authGarage = require("../Middlewares/garageauth.middleware");
 
+router.use(authGarage);
 // Add a new part
 router.post("/add", addPart);
 

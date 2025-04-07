@@ -9,13 +9,15 @@ const {
   updateJobStatus,
 } = require("../Controllers/jobCard.controller");
 const upload = require("../Middlewares/upload")
+const authGarage = require("../Middlewares/garageauth.middleware");
 
 const router = express.Router();
 
+router.use(authGarage);
 // Job Card Routes
 
 // Create Job Card
-// router.post("/add", createJobCard); 
+
 
 // with images
 router.post("/add", upload.fields([
