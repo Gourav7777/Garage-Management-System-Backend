@@ -6,7 +6,7 @@ const GarageSchema = new mongoose.Schema({
   phone: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }, // Admin Password
-  approved: { type: Boolean, default: true }, // Super admin approves it
+  approved: { type: Boolean, default: false }, // Super admin approves it
 }, { timestamps: true });
 
 const Garage = mongoose.model("Garage", GarageSchema);

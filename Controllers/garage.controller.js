@@ -3,10 +3,7 @@ const Garage = require("../Model/garage.model")
 const createGarage= async(req,res)=>{
   
     try {
-        // Check if the logged-in user is Super Admin
-        // if (req.user.role !== "super_admin") {
-        //   return res.status(403).json({ message: "Access denied" });
-        // }
+        
     
         const { name, address, phone, email, password } = req.body;
 
@@ -21,7 +18,7 @@ const createGarage= async(req,res)=>{
         await newGarage.save();
     
         // res.status(201).json({ message: "Garage created. Waiting for approval.", garage: newGarage });
-        res.status(201).json({ message: "Garage created", garage: newGarage })
+        res.status(201).json({ message: "Garage created. Waiting for admin approval.", garage: newGarage })
       } catch (error) {
         res.status(500).json({ message: "Server Error", error: error.message })
       }

@@ -4,13 +4,19 @@ const connection = require("./Config/db")
 const garageRoutes =  require("./Routes/garage.routes")
 const engineerRoutes = require("./Routes/engineer.routes")
 const jobRoutes = require("./Routes/jobCard.routes")
+const inventoryRoutes = require("./Routes/inventory.routes")
+const adminRoutes = require("./Routes/admin.routes")
+
 
 app.use(express.json())
 
 app.use("/api/garage",garageRoutes)
 app.use("/api/engineers", engineerRoutes);
 app.use("/api/jobCards", jobRoutes); 
-app.use("/uploads", express.static("uploads"));  // So you can access files via URL
+app.use("/api/inventory", inventoryRoutes)
+app.use("/api/admin", adminRoutes);
+
+app.use("/uploads", express.static("uploads"));  // So you can access files (images) via URL
 
 const PORT = 8000
 
