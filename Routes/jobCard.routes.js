@@ -6,7 +6,9 @@ const {
   updateJobCard,
   deleteJobCard,
   assignEngineer,
-  updateJobStatus,
+  // updateJobStatus,
+  logWorkProgress,
+  qualityCheckByEngineer,
 } = require("../Controllers/jobCard.controller");
 const upload = require("../Middlewares/upload")
 const authGarage = require("../Middlewares/garageauth.middleware");
@@ -32,6 +34,11 @@ router.delete("/:jobCardId", deleteJobCard); // Delete Job Card
 
 // Engineer & Status Management
 router.put("/assign-engineer/:jobCardId", assignEngineer); // Assign Engineer
-router.put("/update-status/:jobCardId", updateJobStatus); // Update Job Status
+
+// router.put("/update-status/:jobCardId", updateJobStatus); // Update Job Status
+
+router.put("/jobcard/:jobCardId/workprogress", logWorkProgress);
+router.put("/jobcard/:jobCardId/qualitycheck", qualityCheckByEngineer);
+
 
 module.exports = router;

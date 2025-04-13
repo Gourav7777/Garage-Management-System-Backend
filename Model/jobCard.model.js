@@ -26,6 +26,26 @@ const JobCardSchema = new mongoose.Schema({
   },
   images: [{ type: String }], 
   video: { type: String },
+  partsUsed: [{
+    partName: String,
+    quantity: Number,
+    pricePerPiece: Number,
+    totalPrice: Number
+  }],
+  laborHours: Number,
+  engineerRemarks: String,
+  qualityCheck: {
+    notes: String,
+    date: Date,
+    doneBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Engineer" // Assuming engineers do QC
+    },
+    billApproved: {
+      type: Boolean,
+      default: false
+    }
+  }
 }, { timestamps: true });
 
 const JobCard = mongoose.model("JobCard", JobCardSchema);

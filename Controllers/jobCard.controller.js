@@ -171,6 +171,7 @@ const deleteJobCard = async (req, res) => {
   }
 };
 
+
 // ➤ Assign an Engineer to a Job Card
 const assignEngineer = async (req, res) => {
   try {
@@ -199,24 +200,84 @@ const assignEngineer = async (req, res) => {
 };
 
 // ➤ Update Job Status (In Progress, Completed, Pending, Cancelled)
-const updateJobStatus = async (req, res) => {
+// const updateJobStatus = async (req, res) => {
+//   try {
+//     const { jobCardId } = req.params;
+//     const { status } = req.body;
+
+//     const jobCard = await JobCard.findById(jobCardId);
+//     if (!jobCard) {
+//       return res.status(404).json({ message: "Job Card not found" });
+//     }
+
+//     jobCard.status = status;
+//     await jobCard.save();
+
+//     res.status(200).json({ message: "Job status updated successfully", jobCard });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server Error", error: error.message });
+//   }
+// };
+
+
+const logWorkProgress = async (req, res) => {
   try {
     const { jobCardId } = req.params;
-    const { status } = req.body;
+    const { partsUsed, laborHours, engineerRemarks, status } = req.body;
 
     const jobCard = await JobCard.findById(jobCardId);
-    if (!jobCard) {
-      return res.status(404).json({ message: "Job Card not found" });
+    if (!jobCard) return res.status(404).json({ message: "Job Card not found" });
+
+    if (partsUsed) jobCard.partsUsed = partsUsed;
+    if (laborHours) jobCard.laborHours = laborHours;
+    if (engineerRemarks) jobCard.engineerRemarks = engineerRemarks;
+    if (status && ["In Progress", "Completed", "Pending", "Cancelled"].includes(status)) {
+      jobCard.status = status;
     }
 
-    jobCard.status = status;
     await jobCard.save();
-
-    res.status(200).json({ message: "Job status updated successfully", jobCard });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(200).json({ message: "Work progress updated", jobCard });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
+
+
+const qualityCheckByEngineer = async (req, res) => {
+  try {
+    const { jobCardId } = req.params;
+    const { notes } = req.body;
+
+    const jobCard = await JobCard.findById(jobCardId);
+    if (!jobCard) return res.status(404).json({ message: "Job Card not found" });
+
+    if (!jobCard.engineerId) {
+      return res.status(400).json({ message: "No engineer assigned to perform quality check" });
+    }
+
+    if (jobCard.qualityCheck && jobCard.qualityCheck.doneBy) {
+      return res.status(409).json({ message: "Quality Check already completed" });
+    }
+
+    jobCard.qualityCheck = {
+      doneBy: jobCard.engineerId,
+      notes: notes || "No remarks",
+      date: new Date(),
+      billApproved: true
+    };
+
+    await jobCard.save();
+    res.status(200).json({ message: "Quality Check completed", jobCard });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
+
+
+
+
+
+
 
 module.exports = {
   createJobCard,
@@ -225,5 +286,7 @@ module.exports = {
   updateJobCard,
   deleteJobCard,
   assignEngineer,
-  updateJobStatus,
+  // updateJobStatus,
+  logWorkProgress,
+  qualityCheckByEngineer
 };
