@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors");
 const app = express()
 const connection = require("./Config/db")
 const reminderRoutes = require("./Routes/reminder.routes");
@@ -10,6 +11,7 @@ const jobRoutes = require("./Routes/jobCard.routes")
 const inventoryRoutes = require("./Routes/inventory.routes")
 const adminRoutes = require("./Routes/admin.routes")
 
+app.use(cors());
 app.use(express.json())
 
 app.use("/api/garage",garageRoutes)
