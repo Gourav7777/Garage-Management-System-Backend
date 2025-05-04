@@ -4,7 +4,7 @@ const app = express()
 const connection = require("./Config/db")
 const reminderRoutes = require("./Routes/reminder.routes");
 
-
+const billingRoutes = require('./Routes/billing.routes'); // adjust path if needed
 const garageRoutes =  require("./Routes/garage.routes")
 const engineerRoutes = require("./Routes/engineer.routes")
 const jobRoutes = require("./Routes/jobCard.routes")
@@ -19,6 +19,7 @@ app.use("/api/engineers", engineerRoutes);
 app.use("/api/jobCards", jobRoutes); 
 app.use("/api/inventory", inventoryRoutes)
 app.use("/api/admin", adminRoutes);
+app.use("/api/billing", billingRoutes);
 
 app.use("/api/reminders", reminderRoutes);
 app.use("/uploads", express.static("uploads"));  // So you can access files (images) via URL
