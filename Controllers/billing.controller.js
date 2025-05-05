@@ -47,4 +47,17 @@ const generateBill = async (req, res) => {
     }
   };
   
-  module.exports = { generateBill };
+
+
+  const getBillByJobCardId = async (req, res) => {
+    try {
+      const { jobCardId } = req.params;
+      const bill = await Bill.findOne({ jobCardId }).populate("jobCardId").populate("garageId");
+      if (!bill) return res.status(404).json({ message: "Bill not found" });
+      res.status(200).json(bill);
+    } catch (error) {
+      res.status(500).json({ message: "Server Error", error: error.message });
+    }
+  };
+  
+  module.exports = { generateBill , getBillByJobCardId};
