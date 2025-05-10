@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { generateBill,getBillByJobCardId } = require("../Controllers/billing.controller");
-const authGarage = require("../Middlewares/garageauth.middleware");
+const billingController = require("../Controllers/billing.controller");
 
-router.use(authGarage);
-router.post("/generate/:jobCardId", generateBill);
-router.get("/get/:jobCardId", getBillByJobCardId);
+router.post("/generate", billingController.generateBill);
+router.post("/pay", billingController.processPayment);
+router.get("/invoice", billingController.getInvoice);
 
 module.exports = router;
