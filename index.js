@@ -4,35 +4,22 @@ const app = express();
 const connection = require("./Config/db");
 const reminderRoutes = require("./Routes/reminder.routes");
 
-<<<<<<< HEAD
 const garageRoutes = require("./Routes/garage.routes");
 const engineerRoutes = require("./Routes/engineer.routes");
 const jobRoutes = require("./Routes/jobCard.routes");
 const inventoryRoutes = require("./Routes/inventory.routes");
 const adminRoutes = require("./Routes/admin.routes");
-=======
-const billingRoutes = require('./Routes/billing.routes'); // adjust path if needed
-const garageRoutes =  require("./Routes/garage.routes")
-const engineerRoutes = require("./Routes/engineer.routes")
-const jobRoutes = require("./Routes/jobCard.routes")
-const inventoryRoutes = require("./Routes/inventory.routes")
-const adminRoutes = require("./Routes/admin.routes")
->>>>>>> f5d51d03529ae790aebb4e362c4a4f09c5594944
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/garage", garageRoutes);
 app.use("/api/engineers", engineerRoutes);
-app.use("/api/jobCards", jobRoutes);
+app.use("/api/jobcards", jobRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/admin", adminRoutes);
-<<<<<<< HEAD
 // app.use("/api/history", historyRoutes);
-=======
-app.use("/api/billing", billingRoutes);
->>>>>>> f5d51d03529ae790aebb4e362c4a4f09c5594944
-
+app.use("/api/billing", require("./Routes/billing.routes"));
 app.use("/api/reminders", reminderRoutes);
 app.use("/uploads", express.static("uploads")); // So you can access files (images) via URL
 

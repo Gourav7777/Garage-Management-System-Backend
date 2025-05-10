@@ -3,7 +3,7 @@ const Garage = require("../Model/garage.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../Utils/mailer");
-
+const inventoryModel = require("../Model/inventory.model");
 // Admin Login
 exports.login = async (req, res) => {
   try {
@@ -83,7 +83,7 @@ exports.approveGarage = async (req, res) => {
 // Add Part
 exports.addPart = async (req, res) => {
   try {
-    const part = new Inventory(req.body);
+    const part = new inventoryModel(req.body);
     await part.save();
     res.status(201).json(part);
   } catch (err) {
@@ -94,7 +94,7 @@ exports.addPart = async (req, res) => {
 // Update Part
 exports.updatePart = async (req, res) => {
   try {
-    const updatedPart = await Inventory.findByIdAndUpdate(
+    const updatedPart = await inventoryModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
