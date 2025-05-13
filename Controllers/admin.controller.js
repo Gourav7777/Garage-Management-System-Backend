@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../Utils/mailer");
 const inventoryModel = require("../Model/inventory.model");
+const Insurance = require("../Model/insurance.model");
 // Admin Login
 exports.login = async (req, res) => {
   try {
