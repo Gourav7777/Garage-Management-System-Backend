@@ -12,7 +12,7 @@ const InsuranceSchema = new mongoose.Schema(
     type: {
       type: String,
       required: [true, "Insurance type is required"],
-      enum: ["Third-Party", "Comprehensive", "Own Damage"], // Customize as needed
+      // enum: ["Third-Party", "Comprehensive", "Own Damage"], // Customize as needed
     },
     company: {
       type: String,
