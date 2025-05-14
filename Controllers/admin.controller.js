@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../Utils/mailer");
 const inventoryModel = require("../Model/inventory.model");
 const Insurance = require("../Model/insurance.model");
+const JobCard = require("../Model/jobCard.model");
 // Admin Login
 exports.login = async (req, res) => {
   try {
@@ -133,5 +134,23 @@ exports.getExpiringInsurance = async (req, res) => {
     res.json(insurances);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getAllJobCardHistory = async (req, res) => {
+  try {
+    const jobCards = await JobCard.find() // QC engineer
+      .sort({ createdAt: -1 }); // Latest first
+    res.status(200).json({
+      success: true,
+      count: jobCards.length,
+      data: jobCards,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+      error: err.message,
+    });
   }
 };

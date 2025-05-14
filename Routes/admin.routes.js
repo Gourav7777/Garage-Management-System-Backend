@@ -3,6 +3,7 @@ const router = express.Router();
 const adminController = require("../Controllers/admin.controller");
 const { verifyToken } = require("../Middlewares/adminAuth");
 // Admin routes
+router.get("/jobcardhistory", verifyToken, adminController.getAllJobCardHistory);
 router.post("/login", adminController.login);
 router.put("/update/password", adminController.updatePassword);
 router.get("/garages/pending", adminController.getPendingGarages);

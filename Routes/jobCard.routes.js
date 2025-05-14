@@ -10,7 +10,7 @@ const {
   logWorkProgress,
   qualityCheckByEngineer,
 } = require("../Controllers/jobCard.controller");
-const upload = require("../Middlewares/upload")
+const upload = require("../Middlewares/upload");
 const authGarage = require("../Middlewares/garageauth.middleware");
 
 const router = express.Router();
@@ -20,25 +20,25 @@ router.use(authGarage);
 
 // Create Job Card
 
-
 // with images
-router.post("/add", upload.fields([
-  { name: "images", maxCount: 5 },
-  { name: "video", maxCount: 1 }
-]), createJobCard)
-
+// ✅ Fixed Order
 router.get("/garage/:garageId", getJobCardsByGarage); // Get all Job Cards for a Garage
+
+router.post(
+  "/add",
+  upload.fields([
+    { name: "images", maxCount: 5 },
+    { name: "video", maxCount: 1 },
+  ]),
+  createJobCard
+);
 router.get("/:jobCardId", getJobCardById); // Get Single Job Card
 router.put("/:jobCardId", updateJobCard); // Update Job Card
 router.delete("/:jobCardId", deleteJobCard); // Delete Job Card
 
 // Engineer & Status Management
-router.put("/assign-engineer/:jobCardId", assignEngineer); // Assign Engineer
-
-// router.put("/update-status/:jobCardId", updateJobStatus); // Update Job Status
-
+router.put("/assign-engineer/:jobCardId", assignEngineer);
 router.put("/jobcard/:jobCardId/workprogress", logWorkProgress);
 router.put("/jobcard/:jobCardId/qualitycheck", qualityCheckByEngineer);
-
 
 module.exports = router;
